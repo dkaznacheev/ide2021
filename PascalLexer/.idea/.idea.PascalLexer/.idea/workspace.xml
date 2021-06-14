@@ -19,8 +19,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b4301aea-cb13-4937-9c83-50f04d68fe48" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/PascalLexer/PascalLexer.cs" afterDir="false" />
+    <list default="true" id="b4301aea-cb13-4937-9c83-50f04d68fe48" name="Default Changelist" comment="lexer wip">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.PascalLexer/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PascalLexer/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PascalLexer/PascalLexer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PascalLexer/PascalLexer.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,5 +69,21 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="lexer wip" />
+    <option name="LAST_COMMIT_MESSAGE" value="lexer wip" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="552" y="240" key="Vcs.Push.Dialog.v2" timestamp="1623268679733">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="240" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1623268679733" />
+    <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1623700019808">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1623700019808" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1623699005264">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1623699005264" />
   </component>
 </project>
