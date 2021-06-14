@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.SymbolStore;
 using System.Linq;
 using System.Text;
 
@@ -164,23 +162,23 @@ namespace PascalLexer
     
     public class TokenRange
     {
-        public readonly int start;
-        public readonly int end;
+        public readonly int Start;
+        public readonly int End;
 
         public TokenRange(int start, int end)
         {
-            this.start = start;
-            this.end = end;
+            this.Start = start;
+            this.End = end;
         }
     }
     
     public abstract class Token
     {
-        public readonly TokenRange range;
+        public readonly TokenRange Range;
 
         protected Token(TokenRange range)
         {
-            this.range = range;
+            this.Range = range;
         }
     }
 
@@ -242,24 +240,7 @@ namespace PascalLexer
         {
         }
     }
-    public class Decimal: Number
-    {
-        public Decimal(TokenRange range) : base(range)
-        {
-        }
-    }
-    public class Octal: Number
-    {
-        public Octal(TokenRange range) : base(range)
-        {
-        }
-    }
-    public class Hex: Number
-    {
-        public Hex(TokenRange range) : base(range)
-        {
-        }
-    }
+    
     public class CharacterString: Constant
     {
         public CharacterString(TokenRange range) : base(range)
@@ -267,17 +248,14 @@ namespace PascalLexer
         }
     }
 
-
     enum LexerState
     {
         WHITESPACE,
         COMMENT,
-        STRING,
-        OCTAL,
-        DECIMAL,
-        HEX,
+        CHARACTER_STRING,
+        NUMBER,
         IDENTIFIER,
-        OPERATOR
+        SYMBOL
     }
 
     public class LexingException : Exception
@@ -301,6 +279,8 @@ namespace PascalLexer
         {
             this.text = text;
             this.length = text.Length;
+            this.tokens = new List<Token>();
+            this.pos = 0;
         }
 
         private void ReadIdentOrReservedWord()
@@ -397,6 +377,20 @@ namespace PascalLexer
             tokens.Add(new Symbol(range));
         }
 
+        private void ReadDigitSequence(string allowedDigits)
+        {
+            bool readDigits = false;
+            while (pos < length && allowedDigits.Contains(text[pos]))
+            {
+                readDigits = true;
+                pos++;
+            }
+            if (!readDigits)
+            {
+                throw new LexingException(pos);
+            }
+        }
+        
         private void ReadNumber()
         {
             int startPos = pos;
@@ -442,17 +436,7 @@ namespace PascalLexer
                 throw new LexingException(pos);
             }
 
-            bool readDigits = false;
-            while (pos < length && allowedDigits.Contains(text[pos]))
-            {
-                readDigits = true;
-                pos++;
-            }
-
-            if (!readDigits)
-            {
-                throw new LexingException(pos);
-            }
+            ReadDigitSequence(allowedDigits);
             
             if (!allowedDigits.Equals(Reserved.DecimalDigits))
             {
@@ -463,38 +447,81 @@ namespace PascalLexer
             if (text[pos] == '.')
             {
                 pos++;
-                readDigits = false;
-                while (pos < length && allowedDigits.Contains(text[pos]))
-                {
-                    readDigits = true;
-                    pos++;
-                }
-                if (!readDigits)
+                if (pos >= length)
                 {
                     throw new LexingException(pos);
                 }
+                ReadDigitSequence(allowedDigits);
             }
             
             if (text[pos] == 'e' || text[pos] == 'E')
             {
                 pos++;
+                if (pos >= length)
+                {
+                    throw new LexingException(pos);
+                }
                 if (text[pos] == '-')
                 {
                     pos++;
                 }
-                readDigits = false;
-                while (pos < length && allowedDigits.Contains(text[pos]))
+                if (pos >= length)
                 {
-                    readDigits = true;
+                    throw new LexingException(pos);
+                }
+                ReadDigitSequence(allowedDigits);
+            }
+            
+            tokens.Add(new Number(new TokenRange(startPos, pos)));
+        }
+
+        private void ReadCharacterString()
+        {
+            int startPos = pos;
+            if (text[pos] == '#')
+            {
+                pos++;
+                bool isRead = false;
+                while (pos < length && text[pos] >= '0' && text[pos] <= '9')
+                {
+                    isRead = true;
                     pos++;
                 }
-                if (!readDigits)
+
+                if (!isRead || pos == length && !(text[pos - 1] >= '0' && text[pos - 1] <= '9'))
                 {
                     throw new LexingException(pos);
                 }
             }
-            
-            tokens.Add(new Number(new TokenRange(startPos, pos)));
+            else if (text[pos] == '\'')
+            {
+                while (pos != length && text[pos] != '\'')
+                {
+                    if (text[pos] == '\n')
+                    {
+                        throw new LexingException(pos);
+                    }
+                    pos++;
+                }
+
+                if (pos == length && text[pos - 1] != '\'')
+                {
+                    throw new LexingException(pos);
+                }
+            }
+            else
+            {
+                throw new LexingException(pos);
+            }
+            tokens.Add(new CharacterString(new TokenRange(startPos, pos)));
+        }
+        
+        private void ReadWhitespaces()
+        {
+            while (pos < length && " \t\n;".Contains(text[pos]))
+            {
+                pos++;
+            }
         }
         
         private bool IsTwoCharSymbol()
@@ -546,8 +573,10 @@ namespace PascalLexer
         {
             return "$%&".Contains(c) || c >= '0' && c <= '9';
         }
-        
-        
+        private static bool IsCharacterStringStart(char c)
+        {
+            return c == '\'' || c == '#';
+        }
 
         public List<Token> Lex()
         {
@@ -574,19 +603,23 @@ namespace PascalLexer
                 {
                     ReadNumber();
                 }
-                else if (IsSymbolStart(c))
-                {
-                    ReadSymbol();
-                }
                 else if (IsCharacterStringStart(c))
                 {
                     ReadCharacterString();
+                }
+                else if (IsSymbolStart(c))
+                {
+                    ReadSymbol();
                 }
                 else
                 {
                     throw new LexingException(pos);
                 }
+
+                ReadWhitespaces();
             }
+
+            return tokens;
         }
     }
 }
