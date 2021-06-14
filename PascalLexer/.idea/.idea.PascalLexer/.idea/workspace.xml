@@ -19,9 +19,12 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b4301aea-cb13-4937-9c83-50f04d68fe48" name="Default Changelist" comment="More lexing">
+    <list default="true" id="b4301aea-cb13-4937-9c83-50f04d68fe48" name="Default Changelist" comment="Finished lexing">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.PascalLexer/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PascalLexer/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PascalLexer/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PascalLexer/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PascalLexer/PascalLexer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PascalLexer/PascalLexer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PascalLexer/PascalLexer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PascalLexer/Lexer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PascalLexer/PascalLexer.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PascalLexer/PascalLexer.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PascalLexer/Tests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PascalLexer/Tests.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,12 +37,15 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/26BACF2A-B3E7-4E5B-9AB6-134973DBE886/70/d46a5909/List`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/497E7C03-5433-4AE6-B257-9B219192BCF0/c4/2e76e59c/TestAttribute.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/04C5C85C-7E5E-4A4A-B66D-06C5A6DEE283/1d/0002e6b5/ExecutionContext.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/Dmitry/RiderProjects/ide2021/PascalLexer/PascalLexer/PascalLexer.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/PascalLexer/Tests.cs" />
         <option value="$PROJECT_DIR$/PascalLexer/PascalLexer.cs" />
+        <option value="$PROJECT_DIR$/PascalLexer/Lexer.cs" />
+        <option value="$PROJECT_DIR$/PascalLexer/Tests.cs" />
       </list>
     </option>
   </component>
@@ -50,8 +56,11 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.34994584" />
+    <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.30010834" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
   </component>
+  <component name="RunManager" selected="a97f482f-c46c-4bf0-a7ca-81da2734efeb" />
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
@@ -71,9 +80,94 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="lexer wip" />
     <MESSAGE value="More lexing" />
-    <option name="LAST_COMMIT_MESSAGE" value="More lexing" />
+    <MESSAGE value="Finished lexing" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finished lexing" />
   </component>
   <component name="WindowStateProjectService">
+    <state width="1877" height="375" key="GridCell.Tab.0.bottom" timestamp="1623709243597">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="375" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1623709243597" />
+    <state width="1877" height="375" key="GridCell.Tab.0.center" timestamp="1623709243597">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="375" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1623709243597" />
+    <state width="1877" height="375" key="GridCell.Tab.0.left" timestamp="1623709243597">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="375" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1623709243597" />
+    <state width="1877" height="375" key="GridCell.Tab.0.right" timestamp="1623709243597">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="375" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1623709243597" />
+    <state width="1877" height="375" key="GridCell.Tab.1.bottom" timestamp="1623709243597">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="375" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1623709243597" />
+    <state width="1877" height="375" key="GridCell.Tab.1.center" timestamp="1623709243597">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="375" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1623709243597" />
+    <state width="1877" height="375" key="GridCell.Tab.1.left" timestamp="1623709243597">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="375" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1623709243597" />
+    <state width="1877" height="375" key="GridCell.Tab.1.right" timestamp="1623709243597">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="375" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1623709243597" />
+    <state width="1877" height="375" key="GridCell.Tab.2.bottom" timestamp="1623709243597">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="375" key="GridCell.Tab.2.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1623709243597" />
+    <state width="1877" height="375" key="GridCell.Tab.2.center" timestamp="1623709243597">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="375" key="GridCell.Tab.2.center/0.0.1920.1040@0.0.1920.1040" timestamp="1623709243597" />
+    <state width="1877" height="375" key="GridCell.Tab.2.left" timestamp="1623709243597">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="375" key="GridCell.Tab.2.left/0.0.1920.1040@0.0.1920.1040" timestamp="1623709243597" />
+    <state width="1877" height="375" key="GridCell.Tab.2.right" timestamp="1623709243597">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="375" key="GridCell.Tab.2.right/0.0.1920.1040@0.0.1920.1040" timestamp="1623709243597" />
+    <state width="1877" height="375" key="GridCell.Tab.3.bottom" timestamp="1623709243597">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="375" key="GridCell.Tab.3.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1623709243597" />
+    <state width="1877" height="375" key="GridCell.Tab.3.center" timestamp="1623709243597">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="375" key="GridCell.Tab.3.center/0.0.1920.1040@0.0.1920.1040" timestamp="1623709243597" />
+    <state width="1877" height="375" key="GridCell.Tab.3.left" timestamp="1623709243597">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="375" key="GridCell.Tab.3.left/0.0.1920.1040@0.0.1920.1040" timestamp="1623709243597" />
+    <state width="1877" height="375" key="GridCell.Tab.3.right" timestamp="1623709243597">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="375" key="GridCell.Tab.3.right/0.0.1920.1040@0.0.1920.1040" timestamp="1623709243597" />
+    <state width="1877" height="375" key="GridCell.Tab.4.bottom" timestamp="1623709243597">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="375" key="GridCell.Tab.4.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1623709243597" />
+    <state width="1877" height="375" key="GridCell.Tab.4.center" timestamp="1623709243597">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="375" key="GridCell.Tab.4.center/0.0.1920.1040@0.0.1920.1040" timestamp="1623709243597" />
+    <state width="1877" height="375" key="GridCell.Tab.4.left" timestamp="1623709243597">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="375" key="GridCell.Tab.4.left/0.0.1920.1040@0.0.1920.1040" timestamp="1623709243597" />
+    <state width="1877" height="375" key="GridCell.Tab.4.right" timestamp="1623709243597">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="375" key="GridCell.Tab.4.right/0.0.1920.1040@0.0.1920.1040" timestamp="1623709243597" />
+    <state x="749" y="182" key="RiderGenerateDialog" timestamp="1623706942406">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="749" y="182" key="RiderGenerateDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1623706942406" />
     <state x="552" y="240" key="Vcs.Push.Dialog.v2" timestamp="1623702847744">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -82,9 +176,41 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1623700019808" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1623699005264">
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1623706788119">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1623699005264" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1623706788119" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/PascalLexer/Lexer.cs</url>
+          <line>608</line>
+          <properties documentPath="C:\Users\Dmitry\RiderProjects\ide2021\PascalLexer\PascalLexer\Lexer.cs" initialLine="605">
+            <startOffsets>
+              <option value="15746" />
+            </startOffsets>
+            <endOffsets>
+              <option value="15764" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/PascalLexer/Lexer.cs</url>
+          <line>469</line>
+          <properties documentPath="C:\Users\Dmitry\RiderProjects\ide2021\PascalLexer\PascalLexer\Lexer.cs" initialLine="469">
+            <startOffsets>
+              <option value="11644" />
+            </startOffsets>
+            <endOffsets>
+              <option value="11694" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

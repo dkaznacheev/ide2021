@@ -170,6 +170,29 @@ namespace PascalLexer
             this.Start = start;
             this.End = end;
         }
+
+        public override bool Equals(object obj)
+        {
+            return obj != null && obj.GetType() == typeof(TokenRange) && this.Equals((TokenRange) obj);
+        }
+
+        protected bool Equals(TokenRange other)
+        {
+            return Start == other.Start && End == other.End;
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (Start * 397) ^ End;
+            }
+        }
+
+        public override string ToString()
+        {
+            return "(" + Start + ", " + End + ")";
+        }
     }
     
     public abstract class Token
@@ -179,6 +202,21 @@ namespace PascalLexer
         protected Token(TokenRange range)
         {
             this.Range = range;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj != null && this.GetType() == obj.GetType() && this.Equals((Token) obj);
+        }
+        
+        protected bool Equals(Token other)
+        {
+            return Equals(Range, other.Range);
+        }
+
+        public override string ToString()
+        {
+            return this.GetType().Name + Range;
         }
     }
 
@@ -248,34 +286,24 @@ namespace PascalLexer
         }
     }
 
-    enum LexerState
-    {
-        WHITESPACE,
-        COMMENT,
-        CHARACTER_STRING,
-        NUMBER,
-        IDENTIFIER,
-        SYMBOL
-    }
-
     public class LexingException : Exception
     {
         public int Position;
 
-        public LexingException(int position)
+        public LexingException(int position): base(position.ToString())
         {
             Position = position;
         }
     }
 
-    public class PascalLexer
+    public class Lexer
     {
         private readonly string text;
         private readonly int length;
         private List<Token> tokens = new List<Token>();
         private int pos = 0;
 
-        public PascalLexer(string text)
+        public Lexer(string text)
         {
             this.text = text;
             this.length = text.Length;
@@ -291,11 +319,6 @@ namespace PascalLexer
             {
                 sb.Append(text[pos]);
                 pos++;
-            }
-
-            if (pos >= length || !IsLineWhitespace(text[pos]) && text[pos] != ';')
-            {
-                throw new LexingException(pos);
             }
             
             Token token;
@@ -328,16 +351,17 @@ namespace PascalLexer
         private void ReadParenMultiLineComment()
         {
             int startPos = pos;
-            while (pos < length - 1 && !(text[pos - 1] == '*' && text[pos] == ')'))
+            while (pos < length - 1 && !(text[pos] == '*' && text[pos + 1] == ')'))
             {
                 pos++;
             }
             // if we reached the end of text, but didn't find comment end, it's an error
-            if (pos == length - 1 && !(text[pos] == '*' && text[pos + 1] == ')'))
+            if (pos == length - 1 && !(text[pos - 1] == '*' && text[pos] == ')'))
             {
                 throw new LexingException(pos);
             }
 
+            pos += 2;
             tokens.Add(new MultiLineComment(new TokenRange(startPos, pos)));
         }
         
@@ -353,6 +377,11 @@ namespace PascalLexer
             if (pos == length && text[pos - 1] != '}')
             {
                 throw new LexingException(pos);
+            }
+
+            if (text[pos - 1] != '}')
+            {
+                pos++;
             }
             tokens.Add(new MultiLineComment(new TokenRange(startPos, pos)));
         }
@@ -419,7 +448,7 @@ namespace PascalLexer
             }
             else if (text[pos] >= '0' && text[pos] <= '9')
             {
-                allowedDigits = Reserved.OctalDigits;
+                allowedDigits = Reserved.DecimalDigits;
             }
             else
             {
@@ -443,8 +472,8 @@ namespace PascalLexer
                 tokens.Add(new Number(new TokenRange(startPos, pos)));
                 return;
             }
-
-            if (text[pos] == '.')
+            
+            if (pos < length && text[pos] == '.')
             {
                 pos++;
                 if (pos >= length)
@@ -454,7 +483,7 @@ namespace PascalLexer
                 ReadDigitSequence(allowedDigits);
             }
             
-            if (text[pos] == 'e' || text[pos] == 'E')
+            if (pos < length && (text[pos] == 'e' || text[pos] == 'E'))
             {
                 pos++;
                 if (pos >= length)
@@ -495,6 +524,7 @@ namespace PascalLexer
             }
             else if (text[pos] == '\'')
             {
+                pos++;
                 while (pos != length && text[pos] != '\'')
                 {
                     if (text[pos] == '\n')
@@ -508,6 +538,7 @@ namespace PascalLexer
                 {
                     throw new LexingException(pos);
                 }
+                pos++;
             }
             else
             {
@@ -518,7 +549,7 @@ namespace PascalLexer
         
         private void ReadWhitespaces()
         {
-            while (pos < length && " \t\n;".Contains(text[pos]))
+            while (pos < length && " \t\r\n;".Contains(text[pos]))
             {
                 pos++;
             }
@@ -554,11 +585,6 @@ namespace PascalLexer
             return "'+-*/=<>[].,():^@{}$#&%".Contains(c);
         }
 
-        private static bool IsLineWhitespace(char c)
-        {
-            return c == ' ' || c == '\t';
-        }
-
         private static bool IsIdentStartSymbol(char c)
         {
             return c == '_' || c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z' || c == '&';
@@ -580,6 +606,7 @@ namespace PascalLexer
 
         public List<Token> Lex()
         {
+            ReadWhitespaces();
             while (pos < text.Length)
             {
                 var c = text[pos];
